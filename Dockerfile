@@ -16,7 +16,7 @@ RUN set -ex \
       git \
       curl \
  # Build & install
- && git clone https://github.com/xyzrlee/ChinaDNS.git /tmp/repo/ChinaDNS \
+ && git clone https://github.com/shadowsocks/ChinaDNS.git /tmp/repo/ChinaDNS \
  && cd /tmp/repo/ChinaDNS \
  && ./autogen.sh \
  && ./configure \
