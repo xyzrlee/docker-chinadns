@@ -25,7 +25,7 @@ RUN set -ex \
  && make install \
  && cd / \
  && rm -rf /tmp/repo \
- && sh /chnroute.sh >/chnroute.txt \
+ && sh /chnroute.sh >/usr/local/share/chnroute.txt \
  && apk del .build-deps
 
-ENTRYPOINT ["chinadns", "-c", "/chnroute.txt"]
+ENTRYPOINT ["chinadns", "-c", "/usr/local/share/chnroute.txt"]
