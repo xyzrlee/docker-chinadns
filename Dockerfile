@@ -5,6 +5,8 @@
 FROM alpine
 LABEL maintainer="Ricky Li <cnrickylee@gmail.com>"
 
+COPY ./chnroute.sh /
+
 RUN set -ex \
  # Build environment setup
  && apk update \
@@ -23,7 +25,7 @@ RUN set -ex \
  && make install \
  && cd / \
  && rm -rf /tmp/repo \
- && curl 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | grep ipv4 | grep CN | awk -F\| '{ printf("%s/%d\n", $4, 32-log($5)/log(2)) }' >/chnroute.txt \
+ && sh /chnroute.sh >/chnroute.txt \
  && apk del .build-deps
 
 ENTRYPOINT ["chinadns", "-c", "/chnroute.txt"]
