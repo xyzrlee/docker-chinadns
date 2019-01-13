@@ -21,7 +21,8 @@ RUN set -ex \
  && ./autogen.sh \
  && ./configure \
  && make install \
- && rm -rf /tmp/repo/ChinaDNS \
+ && cd / \
+ && rm -rf /tmp/repo \
  && curl 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | grep ipv4 | grep CN | awk -F\| '{ printf("%s/%d\n", $4, 32-log($5)/log(2)) }' >/chnroute.txt \
  && apk del .build-deps
 
