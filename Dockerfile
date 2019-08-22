@@ -5,8 +5,6 @@
 FROM alpine
 LABEL maintainer="Ricky Li <cnrickylee@gmail.com>"
 
-COPY ./chnroute.sh /
-
 RUN set -ex \
  # Build environment setup
  && apk update \
@@ -16,7 +14,6 @@ RUN set -ex \
       build-base \
       c-ares-dev \
       git \
-      curl \
  # Build & install
  && git clone https://github.com/shadowsocks/ChinaDNS.git /tmp/repo/ChinaDNS \
  && cd /tmp/repo/ChinaDNS \
@@ -25,10 +22,6 @@ RUN set -ex \
  && make install \
  && cd / \
  && rm -rf /tmp/repo \
- && apk del .build-deps \
- && apk add --no-cache curl \
- && sh /chnroute.sh \
- && ln -s /chnroute.sh /etc/periodic/daily/chnroute.sh \
- && crond
+ && apk del .build-deps
 
-ENTRYPOINT ["chinadns", "-c", "/usr/local/share/chnroute.txt"]
+ENTRYPOINT ["chinadns"]
