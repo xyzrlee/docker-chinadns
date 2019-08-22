@@ -26,6 +26,7 @@ RUN set -ex \
  && cd / \
  && rm -rf /tmp/repo \
  && apk del .build-deps \
+ && apk add --no-cache curl \
  && sh /chnroute.sh \
  && ln -s /chnroute.sh /etc/periodic/daily/chnroute.sh \
  && crond
