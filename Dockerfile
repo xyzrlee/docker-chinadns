@@ -25,7 +25,9 @@ RUN set -ex \
  && make install \
  && cd / \
  && rm -rf /tmp/repo \
- && sh /chnroute.sh >/usr/local/share/chnroute.txt \
- && apk del .build-deps
+ && apk del .build-deps \
+ && sh /chnroute.sh \
+ && ln -s /chnroute.sh /etc/periodic/daily/chnroute.sh \
+ && crond
 
 ENTRYPOINT ["chinadns", "-c", "/usr/local/share/chnroute.txt"]
