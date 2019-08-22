@@ -6,5 +6,8 @@ services:
         restart: unless-stopped
         ports:
             - "5353:53/udp"
+        volumes:
+            - .:/conf:ro
         command:
             - "-v"
+            - "-c /conf/chnroute.txt"
