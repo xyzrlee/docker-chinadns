@@ -2,7 +2,8 @@
 # Dockerfile for ChinaDNS
 #
 
-FROM alpine
+FROM alpine AS builder
+
 LABEL maintainer="Ricky Li <cnrickylee@gmail.com>"
 
 RUN set -ex \
@@ -19,9 +20,12 @@ RUN set -ex \
  && cd /tmp/repo/ChinaDNS \
  && ./autogen.sh \
  && ./configure \
- && make install \
- && cd / \
- && rm -rf /tmp/repo \
- && apk del .build-deps
+ && make install
+
+# ------------------------------------------------
+
+FROM alpine
+
+COPY --from=builder /usr/local/bin/chinadns /usr/local/bin/chinadns
 
 ENTRYPOINT ["chinadns"]
